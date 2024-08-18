@@ -1,5 +1,8 @@
 local menu = require("menu")
 
+local last_potion_use_time = 0
+local potion_cooldown = 0.2
+
 function check_for_player_buff(buffs, option)
   local count = 0
   for _, buff in ipairs(buffs) do
@@ -10,16 +13,23 @@ function check_for_player_buff(buffs, option)
   return count
 end
 
+function execute_with_cooldown(item)
+  local current_time = get_time_since_inject()
+  if current_time - last_potion_use_time >= potion_cooldown then
+    use_item(item)
+    last_potion_use_time = current_time
+  end
+end
+    
+
 function check_inventory(elixir_options, chosen_index, elixir_toggle, buffs, consumable_items)
   if elixir_toggle then
+    local elixir_name = elixir_options[chosen_index + 1]
     if check_for_player_buff(buffs, elixir_options[chosen_index + 1]) < 1 then
-      if #consumable_items > 0 then
-        for _, item in ipairs(consumable_items) do
-          local item_name = item:get_name()
-          if item_name == elixir_options[chosen_index + 1] then
-            use_item(item)
-            return
-          end
+      for _, item in ipairs(consumable_items) do
+        if item:get_name() == elixir_options[chosen_index + 1] then
+          execute_with_cooldown(item)
+          return
         end
       end
     end
