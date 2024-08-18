@@ -69,7 +69,7 @@ on_update(function()
     local high_elixir_toggle = menu.elements.high_elixir_toggle:get()
     local low_elixir_toggle = menu.elements.low_elixir_toggle:get()
 
-    if not closest_target then
+    if closest_target then
       check_inventory(high_elixir_options, chosen_high_index, high_elixir_toggle, buffs, consumable_items)
       check_inventory(low_elixir_options, chosen_low_index, low_elixir_toggle, buffs, consumable_items)
     end
