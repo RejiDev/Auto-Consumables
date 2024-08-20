@@ -79,9 +79,12 @@ on_update(function()
 
       if high_incense_toggle then
         check_consumables(options.high_incense_options, chosen_high_incense, high_incense_toggle, buffs, consumable_items)
-      elseif medium_incense_toggle then
-        check_consumables(options.medium_incense_options, chosen_medium_incense, medium_incense_toggle, buffs, consumable_items)
-      elseif low_incense_toggle then
+      end
+      if medium_incense_toggle then
+        check_consumables(options.medium_incense_options, chosen_medium_incense, medium_incense_toggle, buffs,
+        consumable_items)
+      end
+      if low_incense_toggle then
         check_consumables(options.low_incense_options, chosen_low_incense, low_incense_toggle, buffs, consumable_items)
       end
     end
